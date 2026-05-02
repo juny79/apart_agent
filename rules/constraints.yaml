@@ -1,0 +1,26 @@
+# 건축 법규 및 설계 기준 룰셋
+# 출처: 주택건설기준 등에 관한 규정, 건축물의 피난·방화구조 등의 기준에 관한 규칙
+
+minimum_dimensions:
+  door:
+    width_mm: 750             # 일반 실내문 최소 폭
+    accessible_width_mm: 850  # 장애인 편의 기준
+  corridor:
+    width_mm: 900             # 아파트 내부 복도 최소 폭
+  bathroom:
+    area_sqm: 2.5             # 화장실 최소 면적
+  bedroom:
+    area_sqm: 7.0             # 침실 최소 면적 (주거용)
+  kitchen:
+    work_triangle_max_mm: 7000  # 주방 작업 삼각형 최대 합계
+
+ceiling_heights:
+  standard_mm: 2400
+  high_ceiling_mm: 2700
+
+clearances:
+  door_swing_clearance_mm: 100  # 문 열림 시 벽과의 최소 간격
+  furniture_wall_gap_mm: 50     # 가구와 벽 사이 최소 간격
+
+agent:
+  max_code_retries: 3           # 검증 실패 시 최대 재시도 횟수
