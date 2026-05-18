@@ -49,12 +49,9 @@ class TestRequirementAgent:
         }
         mock_llm = MagicMock()
         mock_llm_cls.return_value = mock_llm
+        mock_llm.return_value = MagicMock(content=json.dumps(expected))
 
-        mock_chain = MagicMock()
-        mock_chain.invoke.return_value = MagicMock(content=json.dumps(expected))
-
-        with patch("agents.requirement_agent.REQUIREMENT_PROMPT.__or__", return_value=mock_chain):
-            result = requirement_analysis_node(make_state())
+        result = requirement_analysis_node(make_state())
 
         assert result["parsed_requirements"]["apartment_size_pyeong"] == 30
         assert result["parsed_requirements"]["target_space"] == "living_room"
@@ -88,14 +85,9 @@ class TestDraftingAgent:
         raw_code = "import ezdxf\ndoc = ezdxf.new()\ndoc.saveas('output.dxf')"
         mock_llm = MagicMock()
         mock_llm_cls.return_value = mock_llm
+        mock_llm.return_value = MagicMock(content=f"```python\n{raw_code}\n```")
 
-        mock_chain = MagicMock()
-        mock_chain.invoke.return_value = MagicMock(
-            content=f"```python\n{raw_code}\n```"
-        )
-
-        with patch("agents.drafting_agent.DRAFTING_PROMPT.__or__", return_value=mock_chain):
-            result = drafting_node(make_state(parsed_requirements={"target_space": "kitchen"}))
+        result = drafting_node(make_state(parsed_requirements={"target_space": "kitchen"}))
 
         assert result["generated_code"] == raw_code
         assert result["generated_code_version"] == 1
